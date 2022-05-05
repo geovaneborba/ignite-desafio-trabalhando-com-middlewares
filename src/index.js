@@ -76,7 +76,16 @@ function checksTodoExists(request, response, next) {
 }
 
 function findUserById(request, response, next) {
-  // Complete aqui
+  const { id } = request.params;
+
+  const findUserById = users.find((user) => user.id === id);
+
+  if (!findUserById) {
+    return response.status(404).json({ error: 'Invalid id' });
+  }
+
+  request.user = findUserById;
+  return next();
 }
 
 app.post("/users", (request, response) => {
